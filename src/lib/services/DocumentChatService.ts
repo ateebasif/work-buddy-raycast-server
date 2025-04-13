@@ -20,8 +20,8 @@ import { PGVectorStore } from "@langchain/community/vectorstores/pgvector";
 import moment from "moment";
 import axios from "axios";
 
-import { PGVECTOR_CONFIG } from "../constants";
-import { ChatHistory } from "../../types";
+import { PGVECTOR_CONFIG } from "@/constants";
+import { ChatHistory } from "@/types";
 
 // Convert text into embeddings
 const embeddings = new OllamaEmbeddings({ model: "nomic-embed-text" });

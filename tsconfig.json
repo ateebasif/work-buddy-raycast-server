@@ -98,6 +98,14 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
-  }
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+
+    // Add these two to support absolute imports
+    "baseUrl": "./src", // Set the base directory to 'src' for absolute imports
+    "paths": {
+      "@/*": ["*"] // Use '@' as an alias to 'src' folder
+    }
+  },
+  "include": ["src/**/*"], // Include the src folder in the TypeScript project
+  "exclude": ["node_modules", "build"] // Exclude node_modules and build folder
 }
