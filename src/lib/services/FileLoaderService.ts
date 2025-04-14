@@ -24,6 +24,7 @@ type FileData = {
   mimetype: string;
   buffer: Buffer; // File buffer for uploaded files
   size: number;
+  filePath: string;
 };
 
 export class FilesLoaderService {
@@ -85,6 +86,7 @@ export class FilesLoaderService {
             ...doc.metadata,
             fileName: fileData.originalname, // Store original file name
             createdAt: moment().valueOf(),
+            source: fileData.filePath,
           },
           id: uuidv4(),
         }));
