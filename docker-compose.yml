@@ -17,6 +17,7 @@ services:
       - POSTGRES_PASSWORD=ChangeMe
     volumes:
       - pgVector:/var/lib/postgresql/data # Mounts the pgVector volume to the PostgreSQL data directory
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Mount the init.sql file
 
   server:
     build:
