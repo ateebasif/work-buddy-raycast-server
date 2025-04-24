@@ -20,11 +20,14 @@ import { PGVectorStore } from "@langchain/community/vectorstores/pgvector";
 import moment from "moment";
 import axios from "axios";
 
-import { PGVECTOR_CONFIG } from "@/constants";
+import { OLLAMA_BASE_URL, PGVECTOR_CONFIG } from "@/constants";
 import { ChatHistory } from "@/types";
 
 // Convert text into embeddings
-const embeddings = new OllamaEmbeddings({ model: "nomic-embed-text" });
+const embeddings = new OllamaEmbeddings({
+  model: "nomic-embed-text",
+  baseUrl: OLLAMA_BASE_URL,
+});
 
 export class DocumentChatService {
   private model: ChatOllama;
@@ -36,6 +39,7 @@ export class DocumentChatService {
   constructor() {
     this.model = new ChatOllama({
       model: "llama3.2:latest",
+      baseUrl: OLLAMA_BASE_URL,
     });
 
     this.vectorStore = new PGVectorStore(embeddings, PGVECTOR_CONFIG);
@@ -45,7 +49,7 @@ export class DocumentChatService {
   //! Method to check if the Ollama server is running
   protected async isOllamaServerRunning(model = "llama3.2"): Promise<boolean> {
     try {
-      const response = await axios.post("http://localhost:11434/api/generate", {
+      const response = await axios.post(`${OLLAMA_BASE_URL}/api/generate`, {
         model: model,
         prompt: "hey, just say hi",
       });

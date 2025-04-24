@@ -1,12 +1,13 @@
 import express from "express";
 import bodyParser from "body-parser";
 import multer from "multer";
+import "dotenv/config";
 
 import chatRoutes from "@/routes/chat.routes"; // RAG chat routes
 import documentRoutes from "@/routes/document.routes"; // RAG chat routes
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 // const upload = multer({ dest: "./uploads" });
 const upload = multer({ storage: multer.memoryStorage() }); // Files will be stored in memory

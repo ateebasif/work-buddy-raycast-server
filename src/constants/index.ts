@@ -1,5 +1,6 @@
 import { PoolConfig } from "pg";
 import { DistanceStrategy } from "@langchain/community/vectorstores/pgvector";
+import "dotenv/config";
 
 export const MODELS = [
   "mistral:latest",
@@ -8,14 +9,19 @@ export const MODELS = [
   "llama3.2:latest",
 ];
 
+const ollamaHost = process.env.OLLAMA_HOST || "localhost"; // Default to localhost if not set
+const ollamaPort = process.env.OLLAMA_PORT || "11434"; // Default to 11434 if not set
+// Construct the full base URL dynamically
+export const OLLAMA_BASE_URL = `http://${ollamaHost}:${ollamaPort}`;
+
 export const PGVECTOR_CONFIG = {
   postgresConnectionOptions: {
     type: "postgres",
-    host: "127.0.0.1",
-    port: 5431,
-    user: "myuser",
-    password: "ChangeMe",
-    database: "api",
+    host: process.env.PG_HOST || "db", // ✅ Docker Compose service name
+    port: Number(process.env.PG_PORT) || 5432,
+    user: process.env.PG_USER || "myuser",
+    password: process.env.PG_PASSWORD || "ChangeMe",
+    database: process.env.PG_DATABASE || "api",
   } as PoolConfig,
   tableName: "documents",
   columns: {
@@ -24,6 +30,5 @@ export const PGVECTOR_CONFIG = {
     contentColumnName: "content",
     metadataColumnName: "metadata",
   },
-  // supported distance strategies: cosine (default), innerProduct, or euclidean
   distanceStrategy: "cosine" as DistanceStrategy,
 };

@@ -5,9 +5,12 @@ import type { Document } from "@langchain/core/documents";
 import { OllamaEmbeddings } from "@langchain/ollama";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
-import { PGVECTOR_CONFIG } from "@/constants";
+import { OLLAMA_BASE_URL, PGVECTOR_CONFIG } from "@/constants";
 
-const embeddings = new OllamaEmbeddings({ model: "nomic-embed-text" });
+const embeddings = new OllamaEmbeddings({
+  model: "nomic-embed-text",
+  baseUrl: OLLAMA_BASE_URL,
+});
 
 export class PGVectorService {
   private vectorStore: PGVectorStore;
